@@ -12,8 +12,6 @@ type CanvaProps = {
   size?: number;
   width?: number;
   height?: number;
-  x?: number;
-  y?: number;
 }
 
 export function Canva(props: CanvaProps) {
@@ -35,7 +33,7 @@ export function Canva(props: CanvaProps) {
     
     setContext(canva.getContext('2d'))
     
-    canva.addEventListener('mousemove', (event: MouseEvent) => {
+    function handleMouseMove(event: MouseEvent) {
       if (isDrawing && context) {
         start = { x: end.x, y: end.y }
         end   = { x: event.clientX - canvasOffsetX, y: event.clientY - canvasOffsetY }
@@ -50,27 +48,31 @@ export function Canva(props: CanvaProps) {
         context.stroke();
         context.closePath();
       }
-    }) 
+    }
     
-    canva.addEventListener('mousedown', (event: MouseEvent) => {
+    function handleMouseDown(event: MouseEvent) {
       isDrawing = true;
       start = { x: event.clientX - canvasOffsetX, y: event.clientY - canvasOffsetY };
       end   = { x: event.clientX - canvasOffsetX, y: event.clientY - canvasOffsetY };
-    }) 
+    }
     
-    canva.addEventListener('mouseup', () => {
+    function handleMouseUp() {
       isDrawing = false;
-    })
+    }
     
     if (context) {
+      canva.addEventListener('mousemove', handleMouseMove);
+      canva.addEventListener('mousedown', handleMouseDown);
+      canva.addEventListener('mouseup', handleMouseUp);
+
       canvasOffsetX = canva.offsetLeft;
       canvasOffsetY = canva.offsetTop;
     }
 
     return () => {
-      canva.removeEventListener('mousemove', () => {});
-      canva.removeEventListener('mousedown', () => {});
-      canva.removeEventListener('mouseup', () => {});
+      canva.removeEventListener('mousemove', handleMouseMove);
+      canva.removeEventListener('mousedown', handleMouseDown);
+      canva.removeEventListener('mouseup', handleMouseUp);
     }
     
   }, [context, props])
@@ -79,10 +81,6 @@ export function Canva(props: CanvaProps) {
     <canvas
       id='canvas'
       ref={canvas}
-      style = {{
-        left: `${props.x}px`,
-        top: `${props.y}px`,
-      }}
     />
   )
 }
