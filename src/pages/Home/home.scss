@@ -1,4 +1,12 @@
 .Home {
   background: gray;
-  overflow: hidden;
+
+  #menu {
+    background: white;
+    position: absolute;
+    z-index: 100000;
+    height: 100%;
+    width: 250px;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
+  }
 }
