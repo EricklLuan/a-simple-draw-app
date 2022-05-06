@@ -1,0 +1,29 @@
+.Toolbar-Menu {
+  z-index: 1000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 15px;
+
+  width: 20%;
+  min-width: 235px;
+  height: 100%;
+  background: white;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
+
+  #color {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  #size {
+    margin-top: 12px;
+
+    section {
+      margin-top: 6px;
+      display: flex;
+      gap: 8px;
+    }
+  }
+}

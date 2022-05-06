@@ -9,11 +9,10 @@ type Vector2 = {
 }
 
 export function Home() {
-  const [ color, setColor ] = useState<string>("");
   const [ canvasSize ] = useState<Vector2>({ x: 600, y: 700 });
   
   const homes = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     const home = homes.current;
     const canva = document.getElementById('canvas')
@@ -48,7 +47,7 @@ export function Home() {
       canva.style.top = `${y}px`;
     }
 
-    function handleMouseDown(event: MouseEvent) {
+    function handleMouseDown() {
       isMouseDown = true;
     }
 
@@ -72,21 +71,13 @@ export function Home() {
 
   }, [canvasSize])
 
-  function handleChangeColor(event: any) {
-    setColor(event.target.value)
-  }
-
   return (
     <div className="Home fill-parent" ref={homes}>
-      <section id="menu">
-        <input type="color" onChange={handleChangeColor}/>
-      </section>
       <Canva
-        color={color}
         size={14}
         width={canvasSize.x}
         height={canvasSize.y}
-      ></Canva>
+      />
     </div>
   )
 }
