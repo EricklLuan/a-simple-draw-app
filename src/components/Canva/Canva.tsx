@@ -38,10 +38,10 @@ export function Canva(props: CanvaProps) {
     let end: Vector2 = { x: 0, y: 0 }
     let lineColor: string = "black";
     let pencilSize: number = 14;
+    let scale: number = 1;
 
     const color = canva.previousSibling?.firstChild?.lastChild;
     const size = canva.previousSibling?.childNodes[1].lastChild?.firstChild;
-
     const minimapCon = minimap.getContext('2d');
     const context = canva.getContext('2d')
 
@@ -51,15 +51,10 @@ export function Canva(props: CanvaProps) {
     if (!size) return;
     
     minimapCon.scale(0.25, 0.25);
-
-    function handleChangeColor(event: any) {
-      lineColor = event.target.value
-    }
-
-    function handleChangeSize(event: any) {
-      pencilSize = event.target.value
-    }
-
+    
+    function handleChangeColor(event: any) { lineColor = event.target.value; }
+    function handleChangeSize(event: any) { pencilSize = event.target.value; }
+    function handleMouseLeave() { isDrawing = false; }
     function handleMouseMove(event: MouseEvent) {
       if (isDrawing && context) {
         if (!canva) return;
@@ -67,7 +62,7 @@ export function Canva(props: CanvaProps) {
 
         const rect = canva.getBoundingClientRect();
         start = { x: end.x, y: end.y }
-        end   = { x: event.clientX - rect.left, y: event.clientY - rect.top }
+        end   = { x: event.offsetX, y: event.offsetY}
         
         context.beginPath();
         context.moveTo(start.x, start.y);
@@ -86,14 +81,13 @@ export function Canva(props: CanvaProps) {
       if (event.button !== 0) return;
       const rect = canva.getBoundingClientRect();
       isDrawing = true;
-      start = { x: event.clientX - rect.left, y: event.clientY - rect.top };
-      end   = { x: event.clientX - rect.left, y: event.clientY - rect.top };
+      start = { x: event.offsetX, y: event.offsetY };
+      end   = { x: event.offsetX, y: event.offsetY };
     }
     
     function handleMouseUp() {
       if (!minimapCon) return;
       if (!canva) return;
-
       minimapCon.drawImage(canva, 0, 0);
       isDrawing = false;
     }
@@ -113,7 +107,20 @@ export function Canva(props: CanvaProps) {
       document.body.style.cursor = "default";
       canva.style.cursor = "crosshair";
     }
-
+    
+    function handleWheelEvent(event: WheelEvent) {
+      if (event.deltaY < 0 && scale < 2.0) {
+        if (!canva) return;
+        scale += 0.1;
+        canva.style.transform = `scale(${scale}, ${scale})`
+      } else if (event.deltaY > 0 && scale > 0.2) {
+        if (!canva) return;
+        scale -= 0.1;
+        canva.style.transform = `scale(${scale}, ${scale})`
+      }
+    }
+    
+    window.addEventListener('wheel', handleWheelEvent);
     window.addEventListener('keydown', handleKeyDown)
     window.addEventListener('keyup', handleKeyUp);
     size.addEventListener('change', handleChangeSize)
@@ -121,8 +128,10 @@ export function Canva(props: CanvaProps) {
     canva.addEventListener('mousemove', handleMouseMove);
     canva.addEventListener('mousedown', handleMouseDown);
     canva.addEventListener('mouseup', handleMouseUp);
+    canva.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
+      window.removeEventListener('wheel', handleWheelEvent);
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
       size.removeEventListener('change', handleChangeSize);
@@ -130,6 +139,7 @@ export function Canva(props: CanvaProps) {
       canva.removeEventListener('mousemove', handleMouseMove);
       canva.removeEventListener('mousedown', handleMouseDown);
       canva.removeEventListener('mouseup', handleMouseUp);
+      canva.removeEventListener('mouseleave', handleMouseLeave);
     }
     
   }, [props])
