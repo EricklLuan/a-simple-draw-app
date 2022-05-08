@@ -36,12 +36,11 @@ export function Canva(props: CanvaProps) {
     let isDraging: boolean = false;
     let start: Vector2 = { x: 0, y: 0 }
     let end: Vector2 = { x: 0, y: 0 }
-    let lineColor: string = "black";
     let pencilSize: number = 14;
     let scale: number = 1;
 
-    const color = canva.previousSibling?.firstChild?.lastChild;
-    const size = canva.previousSibling?.childNodes[1].lastChild?.firstChild;
+    const color = canva.previousSibling?.childNodes[1]?.lastChild?.firstChild;
+    const size = canva.previousSibling?.childNodes[2].lastChild?.firstChild;
     const minimapCon = minimap.getContext('2d');
     const context = canva.getContext('2d')
 
@@ -52,22 +51,21 @@ export function Canva(props: CanvaProps) {
     
     minimapCon.scale(0.25, 0.25);
     
-    function handleChangeColor(event: any) { lineColor = event.target.value; }
     function handleChangeSize(event: any) { pencilSize = event.target.value; }
     function handleMouseLeave() { isDrawing = false; }
     function handleMouseMove(event: MouseEvent) {
       if (isDrawing && context) {
         if (!canva) return;
+        if (!color) return;
         if (isDraging) return;
 
-        const rect = canva.getBoundingClientRect();
         start = { x: end.x, y: end.y }
         end   = { x: event.offsetX, y: event.offsetY}
         
         context.beginPath();
         context.moveTo(start.x, start.y);
         context.lineTo(end.x, end.y);
-        context.strokeStyle = lineColor;
+        context.strokeStyle = `${color.textContent}`;
         context.lineWidth = pencilSize;
         context.lineCap = 'round';
         context.lineJoin = 'round';
@@ -79,7 +77,6 @@ export function Canva(props: CanvaProps) {
     function handleMouseDown(event: MouseEvent) {
       if (!canva) return;
       if (event.button !== 0) return;
-      const rect = canva.getBoundingClientRect();
       isDrawing = true;
       start = { x: event.offsetX, y: event.offsetY };
       end   = { x: event.offsetX, y: event.offsetY };
@@ -124,7 +121,6 @@ export function Canva(props: CanvaProps) {
     window.addEventListener('keydown', handleKeyDown)
     window.addEventListener('keyup', handleKeyUp);
     size.addEventListener('change', handleChangeSize)
-    color.addEventListener('change', handleChangeColor)
     canva.addEventListener('mousemove', handleMouseMove);
     canva.addEventListener('mousedown', handleMouseDown);
     canva.addEventListener('mouseup', handleMouseUp);
@@ -135,7 +131,6 @@ export function Canva(props: CanvaProps) {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
       size.removeEventListener('change', handleChangeSize);
-      color.removeEventListener('change', handleChangeColor);
       canva.removeEventListener('mousemove', handleMouseMove);
       canva.removeEventListener('mousedown', handleMouseDown);
       canva.removeEventListener('mouseup', handleMouseUp);
