@@ -9,8 +9,37 @@
   height: 100%;
   background: white;
   box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
-
+  
   user-select: none;
+  
+  #states {
+    width: 100%;
+
+    ul {
+      width: 100%;
+      justify-content: space-between;
+      list-style: none;
+
+      li button {
+        width: 32px;
+        height: 32px;
+        border: none;
+        border-radius: 0;
+        
+        background: white;
+        transition: filter 0.3s ease-in-out;
+      }
+
+      li button:hover {
+        filter: contrast(0.9)
+      }
+
+      li button img {
+        width: 22px;
+        height: 22px;
+      }
+    }
+  }
 
   #picker {
     display: flex;
@@ -35,33 +64,58 @@
   }
 
   #size {
-    margin-top: 12px;
+    margin: 16px 8px 0px 8px;
 
     section {
-      margin-top: 6px;
-      display: flex;
       gap: 8px;
-    }
-  }
 
-  #states {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+      section {
+        width: 100%;
+        height: 25px;
 
-    ul {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      list-style: none;
-
-      li button {
-        width: 32px;
-        height: 32px;
-        border: none;
-        border-radius: 0;
-        background: rgba(128, 128, 128, 0.071);
+        #size-px {
+          z-index: 0;
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          pointer-events: none;
+          width: 75.1%;
+          height: 25px;
+        }
+  
+        #size-range {
+          appearance: none;
+          height: 25px;
+          width: 100%;
+          background: gray;
+          outline: none;
+          opacity: 0.7;
+          transition: opacity 0.3s;
+        }
+        
+        #size-range::-webkit-slider-thumb {
+          appearance: none;
+          background: darkgray;
+          border-radius: 0px;
+          border: 2px solid darkgray;
+          width: 25px;
+          height: 25px;
+        }
+  
+        #size-range::-moz-range-thumb {
+          background: darkgray;
+          border-radius: 0px;
+          border: 2px solid darkgray;
+          width: 10px;
+          height: 25px;
+        }
+  
+        #size-range:hover {
+          opacity: 1;
+        }
       }
     }
   }
+
 }

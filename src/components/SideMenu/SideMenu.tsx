@@ -1,4 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+
+import brushIcon from "../../assets/brush-icon.svg"
+import eraserIcon from "../../assets/eraser-icon.svg"
+import arrowsIcon from "../../assets/arrows-icon.svg"
+import fileIcon from "../../assets/file-icon.svg"
+import saveIcon from "../../assets/save-icon.svg"
+
 import "./sidemenu.scss"
 
 export function SideMenu() {
@@ -18,7 +25,7 @@ export function SideMenu() {
     if (!context) return;
 
     let isClicked: boolean = false;
-    let x = 0, y = 0;
+    let x = 250/2, y = 0;
 
     const gradientH = context.createLinearGradient(0, 0, canvas.width, 0);
     gradientH.addColorStop(0, "rgb(255, 0, 0)"); 
@@ -42,10 +49,10 @@ export function SideMenu() {
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     context.beginPath();
-    context.fillStyle = "black";
-    context.lineWidth = 2;
-    context.arc(x, y, 7, 0, 2 * Math.PI, false);
-    context.stroke();
+      context.fillStyle = "black";
+      context.lineWidth = 2;
+      context.arc(x, y, 7, 0, 2 * Math.PI, false);
+      context.stroke();
     context.closePath();
     
     function handleMouseMoveEvent(event: MouseEvent) {
@@ -61,10 +68,10 @@ export function SideMenu() {
       context.fillRect(0, 0, canvas.width, canvas.height);
 
       context.beginPath();
-      context.fillStyle = "black";
-      context.lineWidth = 2;
-      context.arc(x, y, 7, 0, 2 * Math.PI, false);
-      context.stroke();
+        context.fillStyle = "black";
+        context.lineWidth = 2;
+        context.arc(x, y, 7, 0, 2 * Math.PI, false);
+        context.stroke();
       context.closePath();
       
       const img = context.getImageData(x, y, 1, 1);
@@ -84,10 +91,10 @@ export function SideMenu() {
       context.fillRect(0, 0, canvas.width, canvas.height);
 
       context.beginPath();
-      context.fillStyle = "black";
-      context.lineWidth = 2;
-      context.arc(x, y, 7, 0, 2 * Math.PI, false);
-      context.stroke();
+        context.fillStyle = "black";
+        context.lineWidth = 2;
+        context.arc(x, y, 7, 0, 2 * Math.PI, false);
+        context.stroke();
       context.closePath();
 
       const img = context.getImageData(x, y, 1, 1);
@@ -122,16 +129,16 @@ export function SideMenu() {
 
   return(
     <menu className="Toolbar-Menu" type="toolbar">
-      <div id="states">
-        <ul>
-          <li><button onClick={(event) => {console.log(event)}}></button></li>
-          <li><button></button></li>
-          <li><button></button></li>
-          <li><button></button></li>
-          <li><button></button></li>
-          <li><button></button></li>
+      <div id="states" className="flex flex-justify">
+        <ul className="flex">
+          <li><button id="file" className="flex flex-center"><img src={fileIcon} alt="new file" /></button></li>
+          <li><button id="save" className="flex flex-center"><img src={saveIcon} alt="save file" /></button></li>
+          <li><button id="pencil" className="flex flex-center"><img src={brushIcon} alt="brush" /></button></li>
+          <li><button id="ereaser" className="flex flex-center"><img src={eraserIcon} alt="eraser" /></button></li>
+          <li><button id="move" className="flex flex-center"><img src={arrowsIcon} alt="arrows" /></button></li>
         </ul>
       </div>
+
       <div id="picker">
         <canvas id="color-wheel" ref={canvasRef}></canvas>
         <span id="color-wheel-text" style={{
@@ -141,11 +148,13 @@ export function SideMenu() {
         </span>
       </div>
 
-      <div id="size">
-        <label htmlFor="change-size">Pencil Size: </label>
-        <section>
-          <input type="range" name="size-range" id="size-range" min={5} max={200} onChange={handleChangeSize}/>
-          <span>{size}px</span>
+      <div id="size" className="">
+        <section className="flex flex-align">
+          <label htmlFor="change-size">Size:</label>
+          <section>
+            <div id="size-px">{size}px</div>
+            <input type="range" name="size-range" id="size-range" min={5} max={200} onChange={handleChangeSize}/>
+          </section>
         </section>
       </div>
 
