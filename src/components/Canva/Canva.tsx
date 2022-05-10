@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 import { SideMenu } from '../SideMenu/SideMenu';
+import { ModalNewCanva } from '../Modals/ModalNewCanva/ModalNewCanva';
 
 import './canva.scss'
 
@@ -24,9 +25,6 @@ export function Canva(props: CanvaProps) {
 
     if (!canva) return;
     
-    canva.width = props.width? props.width : 500;
-    canva.height = props.height? props.height : 500;
-
     let isDrawing: boolean = false;
     let isDraging: boolean = false;
     let isEraser: boolean = false;
@@ -48,8 +46,8 @@ export function Canva(props: CanvaProps) {
 
     if (!context) return;
     
-    function handleChangeSize(event: any) { pencilSize = event.target.value; }
     function handleMouseLeave() { isDrawing = false; }
+    function handleChangeSize(event: any) { pencilSize = event.target.value; }
     function handleMouseMove(event: MouseEvent) {
       if (isPencil) {
         if (isDrawing && context) {
@@ -133,12 +131,23 @@ export function Canva(props: CanvaProps) {
       }
     }
 
-    function handleChangeToolToPencil(event: any) {
+    function handleSaveImage() {
+      if (!canva) return;
+      const data = canva.toDataURL('image/png', 1.0);
+      const a = document.createElement('a');
+      a.href = data;
+      a.download = "untitled.png";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    function handleChangeToolToPencil() {
       isEraser = false;
       isPencil = true;
     }
 
-    function handleChangeToolToEraser(event: any) {
+    function handleChangeToolToEraser() {
       isPencil = false;
       isEraser = true;
     }
@@ -147,6 +156,7 @@ export function Canva(props: CanvaProps) {
     window.addEventListener('keydown', handleKeyDown)
     window.addEventListener('keyup', handleKeyUp);
 
+    tools.childNodes[1].childNodes[0].addEventListener('click', handleSaveImage);
     tools.childNodes[2].childNodes[0].addEventListener('click', handleChangeToolToPencil);
     tools.childNodes[3].childNodes[0].addEventListener('click', handleChangeToolToEraser);
     size.addEventListener('change', handleChangeSize)
@@ -161,6 +171,7 @@ export function Canva(props: CanvaProps) {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
      
+      tools.childNodes[1].childNodes[0].removeEventListener('click', handleSaveImage);
       tools.childNodes[2].childNodes[0].removeEventListener('click', handleChangeToolToPencil);
       tools.childNodes[3].childNodes[0].removeEventListener('click', handleChangeToolToEraser);
       size.removeEventListener('change', handleChangeSize);
@@ -171,12 +182,13 @@ export function Canva(props: CanvaProps) {
       canva.removeEventListener('mouseleave', handleMouseLeave);
     }
     
-  }, [props])
+  }, [])
 
   return (
     <>
       <SideMenu />
-      <canvas id='canvas' ref={canvas}></canvas>
+      <canvas width={props.width} height={props.height} id='canvas' ref={canvas}></canvas>
+      <ModalNewCanva />
     </>
   )
 }

@@ -1,11 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 * {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
   padding: 0;
   margin: 0;
 }
 
-body {
-  overflow: hidden;
-}
+body { overflow: hidden; }
+
+h1 { font-size: 4.768rem; }
+h2 { font-size: 3.815rem; }
+h3 { font-size: 3.052rem; }
+
+p { font-size: 1rem; }
+
+.p-big    { font-size: 1.25rem; }
+.p-normal { font-size: 1rem;    }
+.p-small  { font-size: 0.8rem;  }
 
 .fill-page {
   width: 100vw;

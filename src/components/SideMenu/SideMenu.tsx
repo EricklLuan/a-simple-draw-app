@@ -135,7 +135,6 @@ export function SideMenu() {
           <li><button id="save" className="flex flex-center"><img src={saveIcon} alt="save file" /></button></li>
           <li><button id="pencil" className="flex flex-center"><img src={brushIcon} alt="brush" /></button></li>
           <li><button id="ereaser" className="flex flex-center"><img src={eraserIcon} alt="eraser" /></button></li>
-          <li><button id="move" className="flex flex-center"><img src={arrowsIcon} alt="arrows" /></button></li>
         </ul>
       </div>
 
@@ -150,10 +149,10 @@ export function SideMenu() {
 
       <div id="size" className="">
         <section className="flex flex-align">
-          <label htmlFor="change-size">Size:</label>
+          <label htmlFor="change-size">Size</label>
           <section>
             <div id="size-px">{size}px</div>
-            <input type="range" name="size-range" id="size-range" min={5} max={200} onChange={handleChangeSize}/>
+            <input type="range" name="size-range" id="size-range" min={1} max={1000} onChange={handleChangeSize}/>
           </section>
         </section>
       </div>
