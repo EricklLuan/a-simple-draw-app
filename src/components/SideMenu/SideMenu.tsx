@@ -1,14 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { ForwardedRef, LegacyRef, useEffect, useRef, useState } from "react";
 
 import brushIcon from "../../assets/brush-icon.svg"
 import eraserIcon from "../../assets/eraser-icon.svg"
-import arrowsIcon from "../../assets/arrows-icon.svg"
 import fileIcon from "../../assets/file-icon.svg"
 import saveIcon from "../../assets/save-icon.svg"
 
 import "./sidemenu.scss"
 
-export function SideMenu() {
+type SideMenuProps = {
+  reference: ForwardedRef<HTMLElement>;
+}
+
+export function SideMenu(props: SideMenuProps) {
 
   const [ size, setSize ] = useState<number>(14);
   const [ color, setColor ] = useState<Array<number>>([255, 255, 255]);
@@ -128,7 +131,7 @@ export function SideMenu() {
   }
 
   return(
-    <menu className="Toolbar-Menu" type="toolbar">
+    <menu className="Toolbar-Menu" type="toolbar" ref={props.reference}>
       <div id="states" className="flex flex-justify">
         <ul className="flex">
           <li><button id="file" className="flex flex-center"><img src={fileIcon} alt="new file" /></button></li>

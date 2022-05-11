@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { SideMenu } from '../SideMenu/SideMenu';
 import { ModalNewCanva } from '../Modals/ModalNewCanva/ModalNewCanva';
@@ -17,7 +17,7 @@ type CanvaProps = {
 }
 
 export function Canva(props: CanvaProps) {
-  
+
   const canvas = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -35,15 +35,17 @@ export function Canva(props: CanvaProps) {
     let pencilSize: number = 14;
     let scale: number = 1;
 
-    const tools = canva.previousSibling?.childNodes[0].firstChild;
-    const color = canva.previousSibling?.childNodes[1].lastChild?.firstChild;
-    const size = canva.previousSibling?.childNodes[2].lastChild?.lastChild?.lastChild;
+    const home = canva.parentElement;
     const context = canva.getContext('2d')
-
+    
+    if (!home) return;
+    const tools = canva.parentElement.previousSibling?.childNodes[0].firstChild;
+    const color = canva.parentElement.previousSibling?.childNodes[1].lastChild?.firstChild;
+    const size = canva.parentElement.previousSibling?.childNodes[2].lastChild?.lastChild?.lastChild;
+    
     if (!tools) return;
     if (!color) return;
     if (!size) return;
-
     if (!context) return;
     
     function handleMouseLeave() { isDrawing = false; }
@@ -130,7 +132,7 @@ export function Canva(props: CanvaProps) {
         canva.style.transform = `scale(${scale}, ${scale})`
       }
     }
-
+    
     function handleSaveImage() {
       if (!canva) return;
       const data = canva.toDataURL('image/png', 1.0);
@@ -152,7 +154,7 @@ export function Canva(props: CanvaProps) {
       isEraser = true;
     }
     
-    window.addEventListener('wheel', handleWheelEvent);
+    home.addEventListener('wheel', handleWheelEvent);
     window.addEventListener('keydown', handleKeyDown)
     window.addEventListener('keyup', handleKeyUp);
 
@@ -167,7 +169,7 @@ export function Canva(props: CanvaProps) {
     canva.addEventListener('mouseleave', handleMouseLeave);
     
     return () => {
-      window.removeEventListener('wheel', handleWheelEvent);
+      home.removeEventListener('wheel', handleWheelEvent);
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
      
@@ -186,9 +188,7 @@ export function Canva(props: CanvaProps) {
 
   return (
     <>
-      <SideMenu />
       <canvas width={props.width} height={props.height} id='canvas' ref={canvas}></canvas>
-      <ModalNewCanva />
     </>
   )
 }

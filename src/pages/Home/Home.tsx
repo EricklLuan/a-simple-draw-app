@@ -1,4 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
+
+import { ModalNewCanva } from '../../components/Modals/ModalNewCanva/ModalNewCanva'
+import { SideMenu } from '../../components/SideMenu/SideMenu'
 import { Canva } from '../../components/Canva/Canva'
 
 import './home.scss'
@@ -9,20 +12,31 @@ type Vector2 = {
 }
 
 export function Home() {
+  const [ isVisibleCanvaModal, setIsVisibleCanvaModal ] = useState<boolean>(false);
   const [ canvasSize ] = useState<Vector2>({ x: 600, y: 700 });
   
   const homes = useRef<HTMLDivElement>(null);
+  const menus = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const home = homes.current;
+    const menu = menus.current;
     const canva = document.getElementById('canvas')
     if (!home) return;
     if (!canva) return;
+    if (!menu) return;
+
+    menu.style.cursor = "default";
+
+    const newCanva = menu.childNodes[0].firstChild?.firstChild?.firstChild?.firstChild;
+    console.log(newCanva);
+
+    if (!newCanva) return;
     
     let isMouseDown: boolean = false;
     let isKeyDown: boolean = false;
-    let x: number = window.innerWidth/2 - canvasSize.x/2, 
-        y: number = window.innerHeight/2 - canvasSize.y/2;
+    let x: number = home.offsetWidth/2 - canvasSize.x/2, 
+        y: number = home.offsetHeight/2 - canvasSize.y/2;
     canva.style.left = `${x}px`
     canva.style.top = `${y}px`
 
@@ -55,11 +69,16 @@ export function Home() {
       isMouseDown = false;
     }
 
+    function handleOpenModal() {
+      setIsVisibleCanvaModal(!isVisibleCanvaModal);
+    }
+
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
     home.addEventListener('mousemove', handleMouseMove);
     home.addEventListener('mousedown', handleMouseDown);
     home.addEventListener('mouseup', handleMouseUp);
+    newCanva.addEventListener('click', handleOpenModal);
  
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
@@ -67,17 +86,24 @@ export function Home() {
       home.removeEventListener('mousemove', handleMouseMove);
       home.removeEventListener('mousedown', handleMouseDown);
       home.removeEventListener('mouseup', handleMouseUp);
+      newCanva.removeEventListener('click', handleOpenModal);
     }
 
   }, [canvasSize])
 
   return (
-    <div className="Home fill-parent" ref={homes}>
-      <Canva
-        size={14}
-        width={canvasSize.x}
-        height={canvasSize.y}
-      />
-    </div>
+    <>
+      <SideMenu reference={menus}/>
+  
+      <main className="Home fill-parent" ref={homes}>
+        <Canva
+          size={14}
+          width={canvasSize.x}
+          height={canvasSize.y}
+        />
+      </main>
+
+      <ModalNewCanva isVisible={isVisibleCanvaModal} setIsVisible={setIsVisibleCanvaModal}/>
+    </>
   )
 }

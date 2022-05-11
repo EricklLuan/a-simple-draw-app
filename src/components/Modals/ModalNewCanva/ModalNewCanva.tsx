@@ -2,11 +2,21 @@ import { Modal } from '../Modal'
 
 import './modalnewcanva.scss'
 
-export function ModalNewCanva() {
+type ModalNewCanvaProps = {
+  isVisible: boolean;
+  setIsVisible: (is: boolean) => void;
+}
+
+export function ModalNewCanva(props: ModalNewCanvaProps) {
+  
+  function handleSubmitForm(event: any) {
+    event.preventDefault();
+  }
+  
   return (
-    <Modal className='Modal-New-Canva flex flex-align'>
+    <Modal isVisible={props.isVisible} setIsVisible={props.setIsVisible} className='Modal-New-Canva flex flex-align'>
       <h1>New Canvas</h1>
-      <form id="form-new-canva" className="flex">
+      <form id="form-new-canva" className="flex" onSubmit={handleSubmitForm}>
         <section id="form-title-input" className="flex">
           <label htmlFor="canva-title">Title: </label>
           <input type="text" name="canva-title" id="canva-title" maxLength={30}/>
