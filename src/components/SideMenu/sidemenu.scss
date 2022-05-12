@@ -19,6 +19,7 @@
       width: 100%;
       justify-content: space-between;
       list-style: none;
+      
 
       li button {
         width: 32px;
@@ -30,6 +31,7 @@
         transition: filter 0.3s ease-in-out;
       }
 
+      
       li button:hover {
         filter: contrast(0.9)
       }
@@ -56,7 +58,7 @@
       width: 100%;
       height: 25px;
       border-bottom: 1px solid rgba(128, 128, 128, 0.239);
-
+  
       p {
         mix-blend-mode: screen;
       }
@@ -80,7 +82,7 @@
           align-items: center;
           justify-content: center;
           pointer-events: none;
-          width: 75.1%;
+          width: 94%;
           height: 25px;
         }
   

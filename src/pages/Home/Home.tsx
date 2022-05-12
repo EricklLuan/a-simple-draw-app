@@ -13,7 +13,9 @@ type Vector2 = {
 
 export function Home() {
   const [ isVisibleCanvaModal, setIsVisibleCanvaModal ] = useState<boolean>(false);
-  const [ canvasSize ] = useState<Vector2>({ x: 600, y: 700 });
+  
+  const [ canvasTitle, setCanvasTitle ] = useState<string>('undefined');
+  const [ canvasSize, setCanvasSize ] = useState<Vector2>({ x: 500, y: 500 });
   
   const homes = useRef<HTMLDivElement>(null);
   const menus = useRef<HTMLElement>(null);
@@ -35,7 +37,7 @@ export function Home() {
     
     let isMouseDown: boolean = false;
     let isKeyDown: boolean = false;
-    let x: number = home.offsetWidth/2 - canvasSize.x/2, 
+    let x: number = home.offsetWidth/2 - canvasSize.x/2 + 100, 
         y: number = home.offsetHeight/2 - canvasSize.y/2;
     canva.style.left = `${x}px`
     canva.style.top = `${y}px`
@@ -97,13 +99,16 @@ export function Home() {
   
       <main className="Home fill-parent" ref={homes}>
         <Canva
-          size={14}
+          title={canvasTitle}
           width={canvasSize.x}
           height={canvasSize.y}
         />
       </main>
 
-      <ModalNewCanva isVisible={isVisibleCanvaModal} setIsVisible={setIsVisibleCanvaModal}/>
+      <ModalNewCanva isVisible={isVisibleCanvaModal} setIsVisible={setIsVisibleCanvaModal}
+        titleState={[canvasTitle, setCanvasTitle]}
+        sizeState={[canvasSize, setCanvasSize]}
+      />
     </>
   )
 }

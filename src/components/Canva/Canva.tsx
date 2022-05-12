@@ -1,7 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
-
-import { SideMenu } from '../SideMenu/SideMenu';
-import { ModalNewCanva } from '../Modals/ModalNewCanva/ModalNewCanva';
+import { useEffect, useRef } from 'react'
 
 import './canva.scss'
 
@@ -11,7 +8,7 @@ type Vector2 = {
 }
 
 type CanvaProps = {
-  size?: number;
+  title: string;
   width?: number;
   height?: number;
 }
@@ -41,7 +38,7 @@ export function Canva(props: CanvaProps) {
     if (!home) return;
     const tools = canva.parentElement.previousSibling?.childNodes[0].firstChild;
     const color = canva.parentElement.previousSibling?.childNodes[1].lastChild?.firstChild;
-    const size = canva.parentElement.previousSibling?.childNodes[2].lastChild?.lastChild?.lastChild;
+    const size = canva.parentElement.previousSibling?.childNodes[2].firstChild?.firstChild?.lastChild;
     
     if (!tools) return;
     if (!color) return;
@@ -138,20 +135,26 @@ export function Canva(props: CanvaProps) {
       const data = canva.toDataURL('image/png', 1.0);
       const a = document.createElement('a');
       a.href = data;
-      a.download = "untitled.png";
+      a.download = `${props.title}.png`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
     }
 
-    function handleChangeToolToPencil() {
+    function handleChangeToolToPencil(event: any) {
       isEraser = false;
       isPencil = true;
+      event.currentTarget.style.boxShadow = `0px -2px 4px gray`;
+      event.currentTarget.style.transition = `box-shadow 0.5s ease-in-out`
+      event.currentTarget.parentElement.parentElement.childNodes[3].firstChild.style.boxShadow = `none`;
     }
 
-    function handleChangeToolToEraser() {
+    function handleChangeToolToEraser(event: any) {
       isPencil = false;
       isEraser = true;
+      event.currentTarget.style.boxShadow = `-1px -2px 3px rgba(128, 128, 128, 0.6)`
+      event.currentTarget.style.transition = `box-shadow 0.5s ease-in-out`
+      event.currentTarget.parentElement.parentElement.childNodes[2].firstChild.style.boxShadow = `none`;
     }
     
     home.addEventListener('wheel', handleWheelEvent);
@@ -184,7 +187,7 @@ export function Canva(props: CanvaProps) {
       canva.removeEventListener('mouseleave', handleMouseLeave);
     }
     
-  }, [])
+  }, [props.title])
 
   return (
     <>
