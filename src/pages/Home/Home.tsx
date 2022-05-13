@@ -91,7 +91,7 @@ export function Home() {
       newCanva.removeEventListener('click', handleOpenModal);
     }
 
-  }, [canvasSize])
+  }, [canvasSize, isVisibleCanvaModal])
 
   return (
     <>
@@ -105,10 +105,10 @@ export function Home() {
         />
       </main>
 
-      <ModalNewCanva isVisible={isVisibleCanvaModal} setIsVisible={setIsVisibleCanvaModal}
-        titleState={[canvasTitle, setCanvasTitle]}
-        sizeState={[canvasSize, setCanvasSize]}
-      />
+        <ModalNewCanva isVisible={isVisibleCanvaModal} setIsVisible={setIsVisibleCanvaModal}
+          titleState={[canvasTitle, setCanvasTitle]}
+          sizeState={[canvasSize, setCanvasSize]}
+        />
     </>
   )
 }
