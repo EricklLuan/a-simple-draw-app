@@ -91,7 +91,7 @@ export function Home() {
       newCanva.removeEventListener('click', handleOpenModal);
     }
 
-  }, [canvasSize, isVisibleCanvaModal])
+  }, [canvasSize])
 
   return (
     <>

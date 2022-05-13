@@ -1,5 +1,4 @@
-import { ReactNode } from "react"
-
+import { ReactNode, useRef } from "react"
 import './modal.scss'
 
 type ModalProps = {
@@ -11,12 +10,14 @@ type ModalProps = {
 
 export function Modal(props: ModalProps) {
 
+  if (!props.isVisible) return null
+
   function handleCloseModal(event: any) {
     if (event.target === event.currentTarget) props.setIsVisible(false);
   }
 
   return (
-    <div className="Modal flex flex-center fill-page" onClick={handleCloseModal} style={{ cursor: "default" }}>
+    <div className="Modal flex flex-center fill-page" onClick={handleCloseModal}>
       <main className="modal-box">
         <section className={`${props.className} modal-content`}>
           {props.children}
