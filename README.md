@@ -3,7 +3,7 @@
 A simple react and html canvas drawing app.  
 
 
-![App aparence](/src/assets/app-aparence.png)
+![App aparence](/src/assets/app-aparence-img.png)
 
 
 ## Technologies
