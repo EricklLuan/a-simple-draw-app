@@ -1,0 +1,27 @@
+[debug] [2022-05-22T15:37:17.970Z] ----------------------------------------------------------------------
+[debug] [2022-05-22T15:37:17.974Z] Command:       /home/ericklluan/.nvm/versions/node/v17.8.0/bin/node /home/ericklluan/.nvm/versions/node/v17.8.0/bin/firebase deploy
+[debug] [2022-05-22T15:37:17.975Z] CLI Version:   11.0.0
+[debug] [2022-05-22T15:37:17.975Z] Platform:      linux
+[debug] [2022-05-22T15:37:17.975Z] Node Version:  v17.8.0
+[debug] [2022-05-22T15:37:17.976Z] Time:          Sun May 22 2022 12:37:17 GMT-0300 (Horário Padrão de Brasília)
+[debug] [2022-05-22T15:37:17.976Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-05-22T15:37:18.115Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-05-22T15:37:18.116Z] > authorizing via signed-in user (flinprice1308ft@gmail.com)
+[debug] [2022-05-22T15:37:18.116Z] [iam] checking project a-simple-draw-app for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2022-05-22T15:37:18.120Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/a-simple-draw-app:testIamPermissions [none]
+[debug] [2022-05-22T15:37:18.120Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/a-simple-draw-app:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-05-22T15:37:19.994Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/a-simple-draw-app:testIamPermissions 200
+[debug] [2022-05-22T15:37:19.994Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/a-simple-draw-app:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-05-22T15:37:19.997Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/a-simple-draw-app [none]
+[debug] [2022-05-22T15:37:22.006Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/a-simple-draw-app 200
+[debug] [2022-05-22T15:37:22.006Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/a-simple-draw-app {"projectId":"a-simple-draw-app","projectNumber":"811642523026","displayName":"a-simple-draw-app","name":"projects/a-simple-draw-app","resources":{"hostingSite":"a-simple-draw-app"},"state":"ACTIVE"}
+[info] 
+[info] === Deploying to 'a-simple-draw-app'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2022-05-22T15:37:22.016Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/a-simple-draw-app [none]
+[debug] [2022-05-22T15:37:23.984Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/a-simple-draw-app 200
+[debug] [2022-05-22T15:37:23.984Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/a-simple-draw-app {"projectId":"a-simple-draw-app","projectNumber":"811642523026","displayName":"a-simple-draw-app","name":"projects/a-simple-draw-app","resources":{"hostingSite":"a-simple-draw-app"},"state":"ACTIVE"}
+[debug] [2022-05-22T15:37:23.989Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/811642523026/sites/a-simple-draw-app/versions [none]
+[debug] [2022-05-22T15:37:23.990Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/811642523026/sites/a-simple-draw-app/versions {"config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"}}
