@@ -1,6 +1,7 @@
 # A Simple Draw App
 
-A simple react and html canvas drawing app.
+A simple react and html canvas drawing app.  
+![App aparence](/src/assets/app-aparence.png)
 
 ## Technologies
   
