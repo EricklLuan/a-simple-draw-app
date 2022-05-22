@@ -118,8 +118,9 @@ export function Canva(props: CanvaProps) {
       canva.style.cursor = "crosshair";
     }
     
+    // Zoom In and Zoom out
     function handleWheelEvent(event: WheelEvent) {
-      if (event.deltaY < 0 && scale < 2.0) {
+      if (event.deltaY < 0 && scale < 10.0) {
         if (!canva) return;
         scale += 0.1;
         canva.style.transform = `scale(${scale}, ${scale})`

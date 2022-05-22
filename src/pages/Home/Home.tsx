@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { ModalNewCanva } from '../../components/Modals/ModalNewCanva/ModalNewCanva'
 import { SideMenu } from '../../components/SideMenu/SideMenu'
+import { Credits } from '../../components/Credits/Credits'
 import { Canva } from '../../components/Canva/Canva'
 
 import './home.scss'
@@ -105,10 +106,12 @@ export function Home() {
         />
       </main>
 
-        <ModalNewCanva isVisible={isVisibleCanvaModal} setIsVisible={setIsVisibleCanvaModal}
-          titleState={[canvasTitle, setCanvasTitle]}
-          sizeState={[canvasSize, setCanvasSize]}
-        />
+      <Credits />
+
+      <ModalNewCanva isVisible={isVisibleCanvaModal} setIsVisible={setIsVisibleCanvaModal}
+        titleState={[canvasTitle, setCanvasTitle]}
+        sizeState={[canvasSize, setCanvasSize]}
+      />
     </>
   )
 }
