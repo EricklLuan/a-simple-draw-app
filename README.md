@@ -2,7 +2,7 @@
 
 A simple react and html canvas drawing app.
 
-## Tecnologies
+## Technologies
   
   - Firebase(for hosting)
   - React
